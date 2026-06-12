@@ -1,0 +1,282 @@
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(135deg, #fbe8ec 0%, #e8f0ff 100%);
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+/* ---------- CAPTCHA card ---------- */
+
+.captcha {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.captcha-header {
+  background: #4a90e2;
+  color: #fff;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.captcha-header-instruction {
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+.captcha-header-target {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 2px 0 4px;
+}
+
+.captcha-header-hint {
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.captcha-header-logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 12px;
+}
+
+.captcha-logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 11px;
+  line-height: 1.1;
+}
+
+.captcha-logo-text span {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.captcha-logo-text small {
+  opacity: 0.85;
+  font-size: 9px;
+}
+
+/* ---------- Grid ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 8px;
+  background: #fff;
+}
+
+.grid-cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  cursor: pointer;
+  background: #eee;
+  user-select: none;
+  border: 0;
+  padding: 0;
+}
+
+.grid-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.grid-cell.selected img {
+  transform: scale(0.78) translateZ(0);
+}
+
+.grid-cell.selected::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #4a90e2;
+  z-index: 0;
+}
+
+.grid-cell.selected img {
+  position: relative;
+  z-index: 1;
+}
+
+.grid-cell .check {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.grid-cell.selected .check {
+  display: flex;
+}
+
+.grid-cell .check svg {
+  width: 16px;
+  height: 16px;
+  fill: #4a90e2;
+}
+
+/* ---------- Error / footer ---------- */
+
+.error {
+  background: #fff4f4;
+  color: #c0392b;
+  border-top: 1px solid #f3c0c0;
+  padding: 8px 14px;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.captcha-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-top: 1px solid #ececec;
+}
+
+.captcha-footer-icons {
+  display: flex;
+  gap: 4px;
+  color: #555;
+}
+
+.icon-btn {
+  background: transparent;
+  border: 0;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #555;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: #f1f3f4;
+}
+
+.icon-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.verify-btn {
+  background: #4a90e2;
+  color: #fff;
+  border: 0;
+  padding: 9px 18px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.verify-btn:hover {
+  background: #3b7dd1;
+}
+
+.verify-btn:active {
+  background: #2f6cba;
+}
+
+/* ---------- Success ---------- */
+
+.success {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.success-card {
+  position: relative;
+  background: #fff;
+  border-radius: 18px;
+  padding: 56px 48px;
+  text-align: center;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.15);
+  max-width: 540px;
+  width: 100%;
+  animation: pop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+
+@keyframes pop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.success-card h1 {
+  margin: 0 0 12px;
+  font-size: 34px;
+  color: #d6336c;
+  font-weight: 600;
+}
+
+/* ---------- Sign-off ---------- */
+
+.signoff {
+  text-align: center;
+  padding: 18px 12px 28px;
+  font-size: 16px;
+  color: #6b6b6b;
+  font-style: italic;
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 380px) {
+  .captcha-header-target { font-size: 20px; }
+  .success-card { padding: 40px 24px; }
+  .success-card h1 { font-size: 26px; }
+}
