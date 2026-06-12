@@ -34,6 +34,7 @@ const verifyBtn = document.getElementById("verify-btn");
 const reloadBtn = document.getElementById("reload-btn");
 const captchaEl = document.getElementById("captcha");
 const successEl = document.getElementById("success");
+const signoffEl = document.getElementById("signoff");
 
 const shuffled = shuffle(ALL_IMAGES);
 const round1Images = shuffled.slice(0, 9);
@@ -102,6 +103,7 @@ verifyBtn.addEventListener("click", () => {
 
   captchaEl.hidden = true;
   successEl.hidden = false;
+  signoffEl.hidden = false;
 });
 
 renderGrid(round1Images);
