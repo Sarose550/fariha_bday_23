@@ -1,24 +1,3 @@
-const ALL_IMAGES = [
-  "images/20250316_142801.jpeg",
-  "images/IMG_0704.jpeg",
-  "images/IMG_3589.jpeg",
-  "images/IMG_3781.jpeg",
-  "images/IMG_3887.jpeg",
-  "images/IMG_3938.jpeg",
-  "images/IMG_4003.jpeg",
-  "images/IMG_4077.jpeg",
-  "images/IMG_4217.jpeg",
-  "images/IMG_4596.jpeg",
-  "images/IMG_4862.jpeg",
-  "images/IMG_4919.jpeg",
-  "images/IMG_5686.jpeg",
-  "images/IMG_7083.jpeg",
-  "images/IMG_8082.jpeg",
-  "images/IMG_9797.jpeg",
-  "images/gradphotos5-10-25-177.jpeg",
-  "images/lp_image.jpeg",
-];
-
 function shuffle(arr) {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -36,10 +15,8 @@ const captchaEl = document.getElementById("captcha");
 const successEl = document.getElementById("success");
 const signoffEl = document.getElementById("signoff");
 
-const shuffled = shuffle(ALL_IMAGES);
-const round1Images = shuffled.slice(0, 9);
-const round2Images = shuffled.slice(9, 18);
-
+let round1Images = [];
+let round2Images = [];
 let round = 1;
 let selected = new Set();
 
@@ -106,4 +83,29 @@ verifyBtn.addEventListener("click", () => {
   signoffEl.hidden = false;
 });
 
-renderGrid(round1Images);
+async function init() {
+  try {
+    const res = await fetch("images/manifest.json");
+    if (!res.ok) {
+      throw new Error(`Failed to load manifest (${res.status})`);
+    }
+
+    const allImages = await res.json();
+    if (allImages.length !== 18) {
+      showError(`Expected 18 images, found ${allImages.length}.`);
+      verifyBtn.disabled = true;
+      return;
+    }
+
+    const shuffled = shuffle(allImages);
+    round1Images = shuffled.slice(0, 9);
+    round2Images = shuffled.slice(9, 18);
+    renderGrid(round1Images);
+  } catch (err) {
+    showError("Could not load images. Try refreshing the page.");
+    verifyBtn.disabled = true;
+    console.error(err);
+  }
+}
+
+init();
