@@ -1,6 +1,10 @@
-# Happy Birthday, Fariha
+# Happy Birthday, Fariha!
 
 A little birthday surprise styled like a Google reCAPTCHA: "Select all images with Fariha." The first attempt always fails (with a "Please try again." nudge), the second attempt always succeeds, and you land on a happy-birthday card.
+
+## Link
+
+https://sarose550.github.io/fariha_bday_23/
 
 ## Local preview
 
